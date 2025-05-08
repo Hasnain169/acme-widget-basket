@@ -50,7 +50,8 @@ class Basket
   # Time Complexity: O(m) where m is number of offers
   def discount
     # O(m) where m is the number of offers
-    @offers.sum { |offer| offer.apply(@items, @items_by_code) }
+    # Round to 2 decimal places to avoid floating point issues
+    @offers.sum { |offer| offer.apply(@items, @items_by_code) }.round(2)
   end
 
   # Calculate the delivery charge based on the post-discount subtotal
@@ -66,7 +67,8 @@ class Basket
   # Time Complexity: O(n + m) where n is items and m is offers
   def total
     # O(n + m) time complexity
-    subtotal - discount + delivery_charge
+    # Round to 2 decimal places to ensure consistent results
+    (subtotal - discount + delivery_charge).round(2)
   end
   
   # Format the total as a currency string
